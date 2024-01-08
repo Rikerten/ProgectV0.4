@@ -269,6 +269,14 @@
         6PAGAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="MainFoodPicture.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        EgAACxIB0t1+/AAAAI1JREFUOE+Vk9sJgDAUQx3BERyhI7ihIziSIziKJoXAbekjDYQ+6Dl+yN2QhF7o
+        zoOZA71RsnnzoQ/qSAi/KBl+uLiYSeJbrjznOJIurIwkU1hpSWxYqSVLsBIlyzBTC2Z/p0iEuWpvSWqY
+        53g3lLRgZSoZwUpX4sBKU8KBcGAlSvIwnSgn0oEVvgWzpR8mvU+9C2fP0wAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="$this.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAABaAAAAQACAYAAAAXy/6SAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL

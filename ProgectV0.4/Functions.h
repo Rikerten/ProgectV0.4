@@ -1,6 +1,8 @@
 #pragma once
 #include "Food.h"
 #include <set>
+#include <iostream>
+#include <vector>
 
 using namespace std;
 using namespace System;
@@ -33,6 +35,7 @@ public: void ConnectToDB() {
 public: Food^ SearchElement(int ID) {
 	try
 	{
+		Food^ n;
 		ConnectToDB();
 
 		String^ cmdText = "SELECT * FROM FoodTable WHERE foodID = @ID";
@@ -41,23 +44,104 @@ public: Food^ SearchElement(int ID) {
 		conn->Open();
 
 		SqlDataReader^ reader = cmd->ExecuteReader();
-		Food^ n;
 
 		if (reader->Read()) {
-			n->ID = Convert::ToInt32(reader["foodID"]->ToString());
-			n->Name = reader["foodName"]->ToString();
+			n->ID = Convert::ToInt32(reader["foodID"]->ToString()->TrimEnd());
+			n->Name = reader["foodName"]->ToString()->TrimEnd();
 			n->Favourite = Convert::ToBoolean(reader["fav"]);
-			n->Rating = Convert::ToInt32(reader["rating"]->ToString());
-			n->Image = reader["image"]->ToString();
+			n->Rating = Convert::ToInt32(reader["rating"]->ToString()->TrimEnd());
+			n->Image = "C:\\Users\\mcrik\\Desktop\\C++ Progects\\ProgectV0.4\\Resourses\\Images\\";
+			n->Image +=	reader["image"]->ToString()->TrimEnd();
+			n->Recipe = SearchRecipe(ID);
+			n->Ingredients = SearchIngradients(ID);
+			n->tags = SearchTags(ID);
 		}
 		else
 		{
 			n->ID = -1;
 		}
+
+
 		return n;
 	}
 	finally
 	{
+		if (conn != nullptr) {
+			conn->Close();
+		}
+	}
+}
+
+private: String^ SearchRecipe(int ID) {
+	try
+	{
+		String^ st;
+		ConnectToDB();
+
+		String^ cmdText = "SELECT recipe FROM RecipeTable WHERE foodID = @ID";
+		SqlCommand^ cmd = gcnew SqlCommand(cmdText, conn);
+		cmd->Parameters->AddWithValue("@ID", ID);
+		conn->Open();
+
+		SqlDataReader^ reader = cmd->ExecuteReader();
+
+		if (reader->Read()) {
+			st = reader["recipe"]->ToString();
+		}
+		return st;
+	}
+	finally {
+		if (conn != nullptr) {
+			conn->Close();
+		}
+	}
+
+}
+
+private:String^ SearchIngradients(int ID) {
+	try
+	{
+		String^ st = "";
+		ConnectToDB();
+
+		String^ cmdText = "SELECT ingradients FROM RecipeTable WHERE foodID = @ID";
+		SqlCommand^ cmd = gcnew SqlCommand(cmdText, conn);
+		cmd->Parameters->AddWithValue("@ID", ID);
+		conn->Open();
+
+		SqlDataReader^ reader = cmd->ExecuteReader();
+
+		if (reader->Read()) {
+			st = reader["ingradients"]->ToString();
+		}
+		return st;
+	}
+	finally {
+		if (conn != nullptr) {
+			conn->Close();
+		}
+	}
+}
+
+private: String^ SearchTags(int ID) {
+	try
+	{
+		String^ st = "";
+		ConnectToDB();
+
+		String^ cmdText = "SELECT tag FROM TagTable WHERE foodID = @ID";
+		SqlCommand^ cmd = gcnew SqlCommand(cmdText, conn);
+		cmd->Parameters->AddWithValue("@ID", ID);
+		conn->Open();
+
+		SqlDataReader^ reader = cmd->ExecuteReader();
+
+		while (reader->Read()) {
+			st += reader["tag"]->ToString()->TrimEnd() + ", ";
+		}
+		return st;
+	}
+	finally {
 		if (conn != nullptr) {
 			conn->Close();
 		}
@@ -85,8 +169,7 @@ public: ListBox::ObjectCollection^ FillComboBox(int tagType) {
 
 		while (reader->Read()) {
 			if (list->Items->IndexOf(reader["tag"]->ToString()) == -1) {
-
-				list->Items->Add(reader["tag"]->ToString());
+				list->Items->Add(reader["tag"]->ToString()->TrimEnd());
 			}
 		}
 		
@@ -102,39 +185,24 @@ public: ListBox::ObjectCollection^ FillComboBox(int tagType) {
 
 }
 
-public: List<int>^ GetFilteredList(String^ tag1, String^ tag2, String^ tag3) {
-	try {
+public: List<int>^ GetList() {
+
+	try
+	{
+		List<int>^ l = gcnew List<int>();
 		ConnectToDB();
 
-		String^ cmdText = "SELECT foodID FROM TagTable WHERE tag IN ('@Tag1', '@Tag2', '@Tag3')";
+		String^ cmdText = "SELECT foodID FROM FoodTable";
 		SqlCommand^ cmd = gcnew SqlCommand(cmdText, conn);
-		/*if ((tag1 == "...") && (tag2 == "...") && (tag3 == "...")){
-			cmd->Parameters->AddWithValue("WHERE tag IN ('@Tag1', '@Tag2', '@Tag3')", "");
-		}
-		else {
-			if (tag1 == "...") cmd->Parameters->AddWithValue("'@Tag1', ", "");
-			else cmd->Parameters->AddWithValue("@Tag1", tag1);
-
-			if (tag2 == "...") cmd->Parameters->AddWithValue(", '@Tag2'", "");
-			else cmd->Parameters->AddWithValue("@Tag2", tag2);
-
-			if (tag3 == "...") cmd->Parameters->AddWithValue(", '@Tag3'", "");
-			else cmd->Parameters->AddWithValue("@Tag3", tag3);
-		}*/
-
-		cmd->Parameters->AddWithValue("@Tag1", tag1);
-		cmd->Parameters->AddWithValue("@Tag2", tag2);
-		cmd->Parameters->AddWithValue("@Tag3", tag3);
-
 		conn->Open();
 
 		SqlDataReader^ reader = cmd->ExecuteReader();
-		List<int>^ list = gcnew List < int >();
 
-		while (reader->Read()) {
-			if(list->IndexOf(Convert::ToInt32(reader["foodID"]->ToString()))==-1) list->Add(Convert::ToInt32(reader["foodID"]->ToString()));
+		while(reader->Read()) {
+			l->Add(Convert::ToInt64(reader["foodID"]->ToString()));
 		}
-		return list;
+
+		return l;
 	}
 	finally
 	{
@@ -143,5 +211,32 @@ public: List<int>^ GetFilteredList(String^ tag1, String^ tag2, String^ tag3) {
 		}
 	}
 }
+
+public: List<int>^ GetFavList() {
+	try
+	{
+		List<int>^ l = gcnew List<int>();
+		ConnectToDB();
+
+		String^ cmdText = "SELECT foodID FROM FoodTable WHERE fav = 1";
+		SqlCommand^ cmd = gcnew SqlCommand(cmdText, conn);
+		conn->Open();
+
+		SqlDataReader^ reader = cmd->ExecuteReader();
+
+		while (reader->Read()) {
+			l->Add(Convert::ToInt64(reader["foodID"]->ToString()));
+		}
+
+		return l;
+	}
+	finally
+	{
+		if (conn != nullptr) {
+			conn->Close();
+		}
+	}
+}
+
 };
 

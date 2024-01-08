@@ -1,4 +1,5 @@
 #pragma once
+#include <Windows.h>
 #include "Food.h"
 #include "Functions.h"
 
@@ -146,15 +147,16 @@ private: System::Windows::Forms::Label^ label11;
 private: System::Windows::Forms::Label^ label10;
 private: System::Windows::Forms::TextBox^ textBox1;
 private: System::Windows::Forms::Button^ SearchButton;
-
-private: int pageNumber; // Номер текущей страницы
-private: List<int>^ list = gcnew List < int >(); // Список элементов.
 private: System::Windows::Forms::PictureBox^ MainFoodPicture;
 
 private: System::Windows::Forms::Label^ IngradientsChapterLabel;
 private: System::Windows::Forms::Label^ IngradientsLabel;
 private: System::Windows::Forms::Label^ RecipeLabel;
 private: System::Windows::Forms::Label^ MainNameLabel;
+
+
+private: int pageNumber; // Номер текущей страницы
+private: List<int>^ list = gcnew List < int >(); // Список элементов.
 
 	private:
 		/// <summary>
@@ -384,6 +386,7 @@ private: System::Windows::Forms::Label^ MainNameLabel;
 			this->FavouriteButton->Size = System::Drawing::Size(60, 60);
 			this->FavouriteButton->TabIndex = 1;
 			this->FavouriteButton->UseVisualStyleBackColor = true;
+			this->FavouriteButton->Click += gcnew System::EventHandler(this, &MyForm::FavouriteButton_Click);
 			// 
 			// HomeButton
 			// 
@@ -1219,14 +1222,20 @@ private: System::Windows::Forms::Label^ MainNameLabel;
 			this->SearchButton->Size = System::Drawing::Size(32, 32);
 			this->SearchButton->TabIndex = 19;
 			this->SearchButton->UseVisualStyleBackColor = true;
+			this->SearchButton->Click += gcnew System::EventHandler(this, &MyForm::SearchButton_Click);
 			// 
 			// MainFoodPicture
 			// 
+			this->MainFoodPicture->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(0)),
+				static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(0)));
+			this->MainFoodPicture->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"MainFoodPicture.BackgroundImage")));
+			this->MainFoodPicture->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->MainFoodPicture->Location = System::Drawing::Point(103, 115);
 			this->MainFoodPicture->Name = L"MainFoodPicture";
 			this->MainFoodPicture->Size = System::Drawing::Size(500, 500);
 			this->MainFoodPicture->TabIndex = 20;
 			this->MainFoodPicture->TabStop = false;
+			this->MainFoodPicture->Click += gcnew System::EventHandler(this, &MyForm::MainFoodPicture_Click);
 			// 
 			// IngradientsChapterLabel
 			// 
@@ -1396,7 +1405,8 @@ private: System::Windows::Forms::Label^ MainNameLabel;
 	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
 		Functions DB;
 		pageNumber = 0;
-		RefillPage();
+		list = DB.GetList();
+		RefillPage(list);
 		comboBox1->DataSource = DB.FillComboBox(1);
 		comboBox2->DataSource = DB.FillComboBox(2);
 		comboBox3->DataSource = DB.FillComboBox(3);
@@ -1409,11 +1419,11 @@ private: System::Windows::Forms::Label^ MainNameLabel;
 	}
 
 	// Метод заполнения боксов
-	private:System::Void RefillPage() {
+	private:System::Void RefillPage(List<int>^ l1) {
 		Functions DB;
 		Food^ f;
-		f = DB.SearchElement(pageNumber*18 + 1);
-		if (f->ID > 0) {
+		if (pageNumber * 18 < l1->Count) {
+			f = DB.SearchElement(l1[pageNumber * 18]);
 			this->Namelabel1->Text = f->Name;
 			this->label1->Text = f->Tags;
 			panel3->Visible = true;
@@ -1423,8 +1433,8 @@ private: System::Windows::Forms::Label^ MainNameLabel;
 			panel3->Visible = false;
 		}
 
-		f = DB.SearchElement(pageNumber * 18 + 2);
-		if (f->ID > 0) {
+		if (pageNumber * 18+1 < l1->Count) {
+			f = DB.SearchElement(l1[pageNumber * 18+1]);
 			this->Namelabel2->Text = f->Name;
 			this->label2->Text = f->Tags;
 			panel4->Visible = true;
@@ -1434,8 +1444,8 @@ private: System::Windows::Forms::Label^ MainNameLabel;
 			panel4->Visible = false;
 		}
 
-		f = DB.SearchElement(pageNumber * 18 + 3);
-		if (f->ID > 0) {
+		if (pageNumber * 18+2 < l1->Count) {
+			f = DB.SearchElement(l1[pageNumber * 18+2]);
 			this->Namelabel3->Text = f->Name;
 			this->label3->Text = f->Tags;
 			panel5->Visible = true;
@@ -1445,8 +1455,8 @@ private: System::Windows::Forms::Label^ MainNameLabel;
 			panel5->Visible = false;
 		}
 
-		f = DB.SearchElement(pageNumber * 18 + 4);
-		if (f->ID > 0) {
+		if (pageNumber * 18 +3  < l1->Count) {
+			f = DB.SearchElement(l1[pageNumber * 18+3]);
 			this->Namelabel4->Text = f->Name;
 			this->label4->Text = f->Tags;
 			panel6->Visible = true;
@@ -1456,8 +1466,8 @@ private: System::Windows::Forms::Label^ MainNameLabel;
 			panel6->Visible = false;
 		}
 
-		f = DB.SearchElement(pageNumber * 18 + 5);
-		if (f->ID > 0) {
+		if (pageNumber * 18+4 < l1->Count) {
+			f = DB.SearchElement(l1[pageNumber * 18+4]);
 			this->Namelabel5->Text = f->Name;
 			this->label5->Text = f->Tags;
 			panel7->Visible = true;
@@ -1467,8 +1477,8 @@ private: System::Windows::Forms::Label^ MainNameLabel;
 			panel7->Visible = false;
 		}
 
-		f = DB.SearchElement(pageNumber * 18 + 6);
-		if (f->ID > 0) {
+		if (pageNumber * 18 +5 < l1->Count) {
+			f = DB.SearchElement(l1[pageNumber * 18+5]);
 			this->Namelabel6->Text = f->Name;
 			this->label6->Text = f->Tags;
 			panel8->Visible = true;
@@ -1478,8 +1488,8 @@ private: System::Windows::Forms::Label^ MainNameLabel;
 			panel8->Visible = false;
 		}
 
-		f = DB.SearchElement(pageNumber * 18 + 7);
-		if (f->ID > 0) {
+		if (pageNumber * 18 + 6 < l1->Count) {
+			f = DB.SearchElement(l1[pageNumber * 18+6]);
 			this->Namelabel7->Text = f->Name;
 			this->label7->Text = f->Tags;
 			panel9->Visible = true;
@@ -1489,8 +1499,9 @@ private: System::Windows::Forms::Label^ MainNameLabel;
 			panel9->Visible = false;
 		}
 
-		f = DB.SearchElement(pageNumber * 18 + 8);
-		if (f->ID > 0) {
+
+		if (pageNumber * 18 + 7 < l1->Count) {
+			f = DB.SearchElement(l1[pageNumber * 18+7]);
 			this->Namelabel8->Text = f->Name;
 			this->label8->Text = f->Tags;
 			panel10->Visible = true;
@@ -1500,8 +1511,9 @@ private: System::Windows::Forms::Label^ MainNameLabel;
 			panel10->Visible = false;
 		}
 
-		f = DB.SearchElement(pageNumber * 18 + 9);
-		if (f->ID > 0) {
+
+		if (pageNumber * 18 + 8 < l1->Count) {
+			f = DB.SearchElement(l1[pageNumber * 18+8]);
 			this->Namelabel9->Text = f->Name;
 			this->label9->Text = f->Tags;
 			panel11->Visible = true;
@@ -1511,48 +1523,53 @@ private: System::Windows::Forms::Label^ MainNameLabel;
 			panel11->Visible = false;
 		}
 
-		f = DB.SearchElement(pageNumber * 18 + 10);
-		if (f->ID > 0) {
+
+		if (pageNumber * 18 + 9 < l1->Count) {
+			f = DB.SearchElement(l1[pageNumber * 18+9]);
 			this->Namelabel10->Text = f->Name;
 			this->label10->Text = f->Tags;
-			panel12->Visible = true;
+			panel20->Visible = true;
 		}
 		else
 		{
-			panel12->Visible = false;
+			panel20->Visible = false;
 		}
-		f = DB.SearchElement(pageNumber * 18 + 11);
-		if (f->ID > 0) {
+
+		if (pageNumber * 18 + 10< l1->Count) {
+			f = DB.SearchElement(l1[pageNumber * 18+10]);
 			this->Namelabel11->Text = f->Name;
 			this->label11->Text = f->Tags;
-			panel13->Visible = true;
+			panel19->Visible = true;
 		}
 		else
 		{
-			panel13->Visible = false;
+			panel19->Visible = false;
 		}
-		f = DB.SearchElement(pageNumber * 18 + 12);
-		if (f->ID > 0) {
+
+		if (pageNumber * 18 + 11 < l1->Count) {
+			f = DB.SearchElement(l1[pageNumber * 18+11]);
 			this->Namelabel12->Text = f->Name;
 			this->label12->Text = f->Tags;
-			panel14->Visible = true;
+			panel18->Visible = true;
 		}
 		else
 		{
-			panel14->Visible = false;
+			panel18->Visible = false;
 		}
-		f = DB.SearchElement(pageNumber * 18 + 13);
-		if (f->ID > 0) {
+
+		if (pageNumber * 18 + 12 < l1->Count) {
+			f = DB.SearchElement(l1[pageNumber * 18+12]);
 			this->Namelabel13->Text = f->Name;
 			this->label13->Text = f->Tags;
-			panel15->Visible = true;
+			panel17->Visible = true;
 		}
 		else
 		{
-			panel15->Visible = false;
+			panel17->Visible = false;
 		}
-		f = DB.SearchElement(pageNumber * 18 + 14);
-		if (f->ID > 0) {
+
+		if (pageNumber * 18 + 13 < l1->Count) {
+			f = DB.SearchElement(l1[pageNumber * 18+13]);
 			this->Namelabel14->Text = f->Name;
 			this->label14->Text = f->Tags;
 			panel16->Visible = true;
@@ -1561,62 +1578,66 @@ private: System::Windows::Forms::Label^ MainNameLabel;
 		{
 			panel16->Visible = false;
 		}
-		f = DB.SearchElement(pageNumber * 18 + 15);
-		if (f->ID > 0) {
+
+		if (pageNumber * 18 + 14 < l1->Count) {
+			f = DB.SearchElement(l1[pageNumber * 18+14]);
 			this->Namelabel15->Text = f->Name;
 			this->label15->Text = f->Tags;
-			panel17->Visible = true;
+			panel15->Visible = true;
 		}
 		else
 		{
-			panel17->Visible = false;
+			panel15->Visible = false;
 		}
-		f = DB.SearchElement(pageNumber * 18 + 16);
-		if (f->ID > 0) {
+
+		if (pageNumber * 18+ 15 < l1->Count) {
+			f = DB.SearchElement(l1[pageNumber * 18+15]);
 			this->Namelabel16->Text = f->Name;
 			this->label16->Text = f->Tags;
-			panel18->Visible = true;
+			panel14->Visible = true;
 		}
 		else
 		{
-			panel18->Visible = false;
+			panel14->Visible = false;
 		}
-		f = DB.SearchElement(pageNumber * 18 + 17);
-		if (f->ID > 0) {
+
+		if (pageNumber * 18 + 16 < l1->Count) {
+			f = DB.SearchElement(l1[pageNumber * 18+16]);
 			this->Namelabel17->Text = f->Name;
 			this->label17->Text = f->Tags;
-			panel19->Visible = true;
+			panel13->Visible = true;
 		}
 		else
 		{
-			panel19->Visible = false;
+			panel13->Visible = false;
 		}
-		f = DB.SearchElement(pageNumber * 18 + 18);
-		if (f->ID > 0) {
+
+		if (pageNumber * 18 + 17 < l1->Count) {
+			f = DB.SearchElement(l1[pageNumber * 18+17]);
 			this->Namelabel18->Text = f->Name;
 			this->label18->Text = f->Tags;
-			panel20->Visible = true;
+			panel12->Visible = true;
 		}
 		else
 		{
-			panel20->Visible = false;
+			panel12->Visible = false;
 		}
 	}
 	
 	//Кнопки переключения страниц
 	private: System::Void NextPageButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		pageNumber++;
-		RefillPage();
+		RefillPage(list);
 	}
 	private: System::Void PrevPageButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		pageNumber--;
 		if (pageNumber < 0) {
 			pageNumber = 0;
 		}
-		RefillPage();
+		RefillPage(list);
 	}
 
-	//Home 
+	//Home ==========================================
 	private: System::Void HomeButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		MainFoodPicture->Visible = false;
 		IngradientsChapterLabel->Visible = false;
@@ -1627,30 +1648,35 @@ private: System::Windows::Forms::Label^ MainNameLabel;
 		PrevPageButton->Visible = true;
 		NextPageButton->Visible = true;
 
-
+		Functions DB;
+		list = DB.GetList();
 		pageNumber = 0;
-		RefillPage();
+		RefillPage(list);
 	}
 	
 
 	//реализация фильтрации=====================================
 	private: System::Void comboBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
-		String^ tag1 = comboBox1->Text;
-		String^ tag2 = comboBox2->Text;
-		String^ tag3 = comboBox3->Text;
-		Functions DB;
+		list = filtering(list);
+		RefillPage(list);
 
 	}
 	private: System::Void comboBox2_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+		list = filtering(list);
+		RefillPage(list);
 	}
 	private: System::Void comboBox3_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+		list = filtering(list);
+		RefillPage(list);
 	}
+	
+		   
 	//============================================================
 	private: System::Void panel3_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 	}
 
 //Открытие рецепта ==============================================
-private: System::Void panel3_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+private: System::Void ShowItem(int itemID) {
 	MainFoodPicture->Visible = true;
 	IngradientsChapterLabel->Visible = true;
 	IngradientsLabel->Visible = true;
@@ -1658,8 +1684,8 @@ private: System::Void panel3_MouseClick(System::Object^ sender, System::Windows:
 	MainNameLabel->Visible = true;
 	Functions DB;
 	Food^ f;
-	f = DB.SearchElement(pageNumber * 18 + 1);
-	MainFoodPicture->Image;
+	f = DB.SearchElement(itemID);
+	MainFoodPicture->Image = Image::FromFile(f->image);
 	MainNameLabel->Text = f->Name;
 	IngradientsLabel->Text = f->Ingredients;
 	RecipeLabel->Text = f->Recipe;
@@ -1684,604 +1710,126 @@ private: System::Void panel3_MouseClick(System::Object^ sender, System::Windows:
 	panel20->Visible = false;
 	PrevPageButton->Visible = false;
 	NextPageButton->Visible = false;
+}
 
-
-
+private: System::Void panel3_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+	ShowItem(pageNumber * 18 + 1);
 }
 private: System::Void panel4_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	MainFoodPicture->Visible = true;
-	IngradientsChapterLabel->Visible = true;
-	IngradientsLabel->Visible = true;
-	RecipeLabel->Visible = true;
-	MainNameLabel->Visible = true;
-	Functions DB;
-	Food^ f;
-	f = DB.SearchElement(pageNumber * 18 + 2);
-	MainFoodPicture->Image;
-	MainNameLabel->Text = f->Name;
-	IngradientsLabel->Text = f->Ingredients;
-	RecipeLabel->Text = f->Recipe;
-
-	panel3->Visible = false;
-	panel4->Visible = false;
-	panel5->Visible = false;
-	panel6->Visible = false;
-	panel7->Visible = false;
-	panel8->Visible = false;
-	panel9->Visible = false;
-	panel10->Visible = false;
-	panel11->Visible = false;
-	panel12->Visible = false;
-	panel13->Visible = false;
-	panel14->Visible = false;
-	panel15->Visible = false;
-	panel16->Visible = false;
-	panel17->Visible = false;
-	panel18->Visible = false;
-	panel19->Visible = false;
-	panel20->Visible = false;
-	PrevPageButton->Visible = false;
-	NextPageButton->Visible = false;
+	ShowItem(pageNumber * 18 + 2);
 }
 private: System::Void panel5_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	MainFoodPicture->Visible = true;
-	IngradientsChapterLabel->Visible = true;
-	IngradientsLabel->Visible = true;
-	RecipeLabel->Visible = true;
-	MainNameLabel->Visible = true;
-	Functions DB;
-	Food^ f;
-	f = DB.SearchElement(pageNumber * 18 + 3);
-	MainFoodPicture->Image;
-	MainNameLabel->Text = f->Name;
-	IngradientsLabel->Text = f->Ingredients;
-	RecipeLabel->Text = f->Recipe;
-
-	panel3->Visible = false;
-	panel4->Visible = false;
-	panel5->Visible = false;
-	panel6->Visible = false;
-	panel7->Visible = false;
-	panel8->Visible = false;
-	panel9->Visible = false;
-	panel10->Visible = false;
-	panel11->Visible = false;
-	panel12->Visible = false;
-	panel13->Visible = false;
-	panel14->Visible = false;
-	panel15->Visible = false;
-	panel16->Visible = false;
-	panel17->Visible = false;
-	panel18->Visible = false;
-	panel19->Visible = false;
-	panel20->Visible = false;
-	PrevPageButton->Visible = false;
-	NextPageButton->Visible = false;
+	ShowItem(pageNumber * 18 + 3);
 }
 private: System::Void panel6_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	MainFoodPicture->Visible = true;
-	IngradientsChapterLabel->Visible = true;
-	IngradientsLabel->Visible = true;
-	RecipeLabel->Visible = true;
-	MainNameLabel->Visible = true;
-	Functions DB;
-	Food^ f;
-	f = DB.SearchElement(pageNumber * 18 + 4);
-	MainFoodPicture->Image;
-	MainNameLabel->Text = f->Name;
-	IngradientsLabel->Text = f->Ingredients;
-	RecipeLabel->Text = f->Recipe;
-
-	panel3->Visible = false;
-	panel4->Visible = false;
-	panel5->Visible = false;
-	panel6->Visible = false;
-	panel7->Visible = false;
-	panel8->Visible = false;
-	panel9->Visible = false;
-	panel10->Visible = false;
-	panel11->Visible = false;
-	panel12->Visible = false;
-	panel13->Visible = false;
-	panel14->Visible = false;
-	panel15->Visible = false;
-	panel16->Visible = false;
-	panel17->Visible = false;
-	panel18->Visible = false;
-	panel19->Visible = false;
-	panel20->Visible = false;
-	PrevPageButton->Visible = false;
-	NextPageButton->Visible = false;
+	ShowItem(pageNumber * 18 + 4);
 }
 private: System::Void panel7_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	MainFoodPicture->Visible = true;
-	IngradientsChapterLabel->Visible = true;
-	IngradientsLabel->Visible = true;
-	RecipeLabel->Visible = true;
-	MainNameLabel->Visible = true;
-	Functions DB;
-	Food^ f;
-	f = DB.SearchElement(pageNumber * 18 + 5);
-	MainFoodPicture->Image;
-	MainNameLabel->Text = f->Name;
-	IngradientsLabel->Text = f->Ingredients;
-	RecipeLabel->Text = f->Recipe;
-
-	panel3->Visible = false;
-	panel4->Visible = false;
-	panel5->Visible = false;
-	panel6->Visible = false;
-	panel7->Visible = false;
-	panel8->Visible = false;
-	panel9->Visible = false;
-	panel10->Visible = false;
-	panel11->Visible = false;
-	panel12->Visible = false;
-	panel13->Visible = false;
-	panel14->Visible = false;
-	panel15->Visible = false;
-	panel16->Visible = false;
-	panel17->Visible = false;
-	panel18->Visible = false;
-	panel19->Visible = false;
-	panel20->Visible = false;
-	PrevPageButton->Visible = false;
-	NextPageButton->Visible = false;
+	ShowItem(pageNumber * 18 + 5);
 }
 private: System::Void panel8_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	MainFoodPicture->Visible = true;
-	IngradientsChapterLabel->Visible = true;
-	IngradientsLabel->Visible = true;
-	RecipeLabel->Visible = true;
-	MainNameLabel->Visible = true;
-	Functions DB;
-	Food^ f;
-	f = DB.SearchElement(pageNumber * 18 + 6);
-	MainFoodPicture->Image;
-	MainNameLabel->Text = f->Name;
-	IngradientsLabel->Text = f->Ingredients;
-	RecipeLabel->Text = f->Recipe;
-
-	panel3->Visible = false;
-	panel4->Visible = false;
-	panel5->Visible = false;
-	panel6->Visible = false;
-	panel7->Visible = false;
-	panel8->Visible = false;
-	panel9->Visible = false;
-	panel10->Visible = false;
-	panel11->Visible = false;
-	panel12->Visible = false;
-	panel13->Visible = false;
-	panel14->Visible = false;
-	panel15->Visible = false;
-	panel16->Visible = false;
-	panel17->Visible = false;
-	panel18->Visible = false;
-	panel19->Visible = false;
-	panel20->Visible = false;
-	PrevPageButton->Visible = false;
-	NextPageButton->Visible = false;
+	ShowItem(pageNumber * 18 + 6);
 }
 private: System::Void panel9_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	MainFoodPicture->Visible = true;
-	IngradientsChapterLabel->Visible = true;
-	IngradientsLabel->Visible = true;
-	RecipeLabel->Visible = true;
-	MainNameLabel->Visible = true;
-	Functions DB;
-	Food^ f;
-	f = DB.SearchElement(pageNumber * 18 + 7);
-	MainFoodPicture->Image;
-	MainNameLabel->Text = f->Name;
-	IngradientsLabel->Text = f->Ingredients;
-	RecipeLabel->Text = f->Recipe;
-
-	panel3->Visible = false;
-	panel4->Visible = false;
-	panel5->Visible = false;
-	panel6->Visible = false;
-	panel7->Visible = false;
-	panel8->Visible = false;
-	panel9->Visible = false;
-	panel10->Visible = false;
-	panel11->Visible = false;
-	panel12->Visible = false;
-	panel13->Visible = false;
-	panel14->Visible = false;
-	panel15->Visible = false;
-	panel16->Visible = false;
-	panel17->Visible = false;
-	panel18->Visible = false;
-	panel19->Visible = false;
-	panel20->Visible = false;
-	PrevPageButton->Visible = false;
-	NextPageButton->Visible = false;
+	ShowItem(pageNumber * 18 + 7);
 }
 private: System::Void panel10_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	MainFoodPicture->Visible = true;
-	IngradientsChapterLabel->Visible = true;
-	IngradientsLabel->Visible = true;
-	RecipeLabel->Visible = true;
-	MainNameLabel->Visible = true;
-	Functions DB;
-	Food^ f;
-	f = DB.SearchElement(pageNumber * 18 + 8);
-	MainFoodPicture->Image;
-	MainNameLabel->Text = f->Name;
-	IngradientsLabel->Text = f->Ingredients;
-	RecipeLabel->Text = f->Recipe;
-
-	panel3->Visible = false;
-	panel4->Visible = false;
-	panel5->Visible = false;
-	panel6->Visible = false;
-	panel7->Visible = false;
-	panel8->Visible = false;
-	panel9->Visible = false;
-	panel10->Visible = false;
-	panel11->Visible = false;
-	panel12->Visible = false;
-	panel13->Visible = false;
-	panel14->Visible = false;
-	panel15->Visible = false;
-	panel16->Visible = false;
-	panel17->Visible = false;
-	panel18->Visible = false;
-	panel19->Visible = false;
-	panel20->Visible = false;
-	PrevPageButton->Visible = false;
-	NextPageButton->Visible = false;
+	ShowItem(pageNumber * 18 + 8);
 }
 private: System::Void panel11_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	MainFoodPicture->Visible = true;
-	IngradientsChapterLabel->Visible = true;
-	IngradientsLabel->Visible = true;
-	RecipeLabel->Visible = true;
-	MainNameLabel->Visible = true;
-	Functions DB;
-	Food^ f;
-	f = DB.SearchElement(pageNumber * 18 + 9);
-	MainFoodPicture->Image;
-	MainNameLabel->Text = f->Name;
-	IngradientsLabel->Text = f->Ingredients;
-	RecipeLabel->Text = f->Recipe;
-
-	panel3->Visible = false;
-	panel4->Visible = false;
-	panel5->Visible = false;
-	panel6->Visible = false;
-	panel7->Visible = false;
-	panel8->Visible = false;
-	panel9->Visible = false;
-	panel10->Visible = false;
-	panel11->Visible = false;
-	panel12->Visible = false;
-	panel13->Visible = false;
-	panel14->Visible = false;
-	panel15->Visible = false;
-	panel16->Visible = false;
-	panel17->Visible = false;
-	panel18->Visible = false;
-	panel19->Visible = false;
-	panel20->Visible = false;
-	PrevPageButton->Visible = false;
-	NextPageButton->Visible = false;
+	ShowItem(pageNumber * 18 + 9);
 }
 private: System::Void panel20_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	MainFoodPicture->Visible = true;
-	IngradientsChapterLabel->Visible = true;
-	IngradientsLabel->Visible = true;
-	RecipeLabel->Visible = true;
-	MainNameLabel->Visible = true;
-	Functions DB;
-	Food^ f;
-	f = DB.SearchElement(pageNumber * 18 + 10);
-	MainFoodPicture->Image;
-	MainNameLabel->Text = f->Name;
-	IngradientsLabel->Text = f->Ingredients;
-	RecipeLabel->Text = f->Recipe;
-
-	panel3->Visible = false;
-	panel4->Visible = false;
-	panel5->Visible = false;
-	panel6->Visible = false;
-	panel7->Visible = false;
-	panel8->Visible = false;
-	panel9->Visible = false;
-	panel10->Visible = false;
-	panel11->Visible = false;
-	panel12->Visible = false;
-	panel13->Visible = false;
-	panel14->Visible = false;
-	panel15->Visible = false;
-	panel16->Visible = false;
-	panel17->Visible = false;
-	panel18->Visible = false;
-	panel19->Visible = false;
-	panel20->Visible = false;
-	PrevPageButton->Visible = false;
-	NextPageButton->Visible = false;
+	ShowItem(pageNumber * 18 + 10);
 }
 private: System::Void panel19_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	MainFoodPicture->Visible = true;
-	IngradientsChapterLabel->Visible = true;
-	IngradientsLabel->Visible = true;
-	RecipeLabel->Visible = true;
-	MainNameLabel->Visible = true;
-	Functions DB;
-	Food^ f;
-	f = DB.SearchElement(pageNumber * 18 + 11);
-	MainFoodPicture->Image;
-	MainNameLabel->Text = f->Name;
-	IngradientsLabel->Text = f->Ingredients;
-	RecipeLabel->Text = f->Recipe;
-
-	panel3->Visible = false;
-	panel4->Visible = false;
-	panel5->Visible = false;
-	panel6->Visible = false;
-	panel7->Visible = false;
-	panel8->Visible = false;
-	panel9->Visible = false;
-	panel10->Visible = false;
-	panel11->Visible = false;
-	panel12->Visible = false;
-	panel13->Visible = false;
-	panel14->Visible = false;
-	panel15->Visible = false;
-	panel16->Visible = false;
-	panel17->Visible = false;
-	panel18->Visible = false;
-	panel19->Visible = false;
-	panel20->Visible = false;
-	PrevPageButton->Visible = false;
-	NextPageButton->Visible = false;
+	ShowItem(pageNumber * 18 + 11);
 }
 private: System::Void panel18_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	MainFoodPicture->Visible = true;
-	IngradientsChapterLabel->Visible = true;
-	IngradientsLabel->Visible = true;
-	RecipeLabel->Visible = true;
-	MainNameLabel->Visible = true;
-	Functions DB;
-	Food^ f;
-	f = DB.SearchElement(pageNumber * 18 + 12);
-	MainFoodPicture->Image;
-	MainNameLabel->Text = f->Name;
-	IngradientsLabel->Text = f->Ingredients;
-	RecipeLabel->Text = f->Recipe;
-
-	panel3->Visible = false;
-	panel4->Visible = false;
-	panel5->Visible = false;
-	panel6->Visible = false;
-	panel7->Visible = false;
-	panel8->Visible = false;
-	panel9->Visible = false;
-	panel10->Visible = false;
-	panel11->Visible = false;
-	panel12->Visible = false;
-	panel13->Visible = false;
-	panel14->Visible = false;
-	panel15->Visible = false;
-	panel16->Visible = false;
-	panel17->Visible = false;
-	panel18->Visible = false;
-	panel19->Visible = false;
-	panel20->Visible = false;
-	PrevPageButton->Visible = false;
-	NextPageButton->Visible = false;
+	ShowItem(pageNumber * 18 + 12);
 }
 private: System::Void panel17_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	MainFoodPicture->Visible = true;
-	IngradientsChapterLabel->Visible = true;
-	IngradientsLabel->Visible = true;
-	RecipeLabel->Visible = true;
-	MainNameLabel->Visible = true;
-	Functions DB;
-	Food^ f;
-	f = DB.SearchElement(pageNumber * 18 + 13);
-	MainFoodPicture->Image;
-	MainNameLabel->Text = f->Name;
-	IngradientsLabel->Text = f->Ingredients;
-	RecipeLabel->Text = f->Recipe;
-
-	panel3->Visible = false;
-	panel4->Visible = false;
-	panel5->Visible = false;
-	panel6->Visible = false;
-	panel7->Visible = false;
-	panel8->Visible = false;
-	panel9->Visible = false;
-	panel10->Visible = false;
-	panel11->Visible = false;
-	panel12->Visible = false;
-	panel13->Visible = false;
-	panel14->Visible = false;
-	panel15->Visible = false;
-	panel16->Visible = false;
-	panel17->Visible = false;
-	panel18->Visible = false;
-	panel19->Visible = false;
-	panel20->Visible = false;
-	PrevPageButton->Visible = false;
-	NextPageButton->Visible = false;
+	ShowItem(pageNumber * 18 + 13);
 }
 private: System::Void panel16_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	MainFoodPicture->Visible = true;
-	IngradientsChapterLabel->Visible = true;
-	IngradientsLabel->Visible = true;
-	RecipeLabel->Visible = true;
-	MainNameLabel->Visible = true;
-	Functions DB;
-	Food^ f;
-	f = DB.SearchElement(pageNumber * 18 + 14);
-	MainFoodPicture->Image;
-	MainNameLabel->Text = f->Name;
-	IngradientsLabel->Text = f->Ingredients;
-	RecipeLabel->Text = f->Recipe;
-
-	panel3->Visible = false;
-	panel4->Visible = false;
-	panel5->Visible = false;
-	panel6->Visible = false;
-	panel7->Visible = false;
-	panel8->Visible = false;
-	panel9->Visible = false;
-	panel10->Visible = false;
-	panel11->Visible = false;
-	panel12->Visible = false;
-	panel13->Visible = false;
-	panel14->Visible = false;
-	panel15->Visible = false;
-	panel16->Visible = false;
-	panel17->Visible = false;
-	panel18->Visible = false;
-	panel19->Visible = false;
-	panel20->Visible = false;
-	PrevPageButton->Visible = false;
-	NextPageButton->Visible = false;
+	ShowItem(pageNumber * 18 + 14);
 }
 private: System::Void panel15_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	MainFoodPicture->Visible = true;
-	IngradientsChapterLabel->Visible = true;
-	IngradientsLabel->Visible = true;
-	RecipeLabel->Visible = true;
-	MainNameLabel->Visible = true;
-	Functions DB;
-	Food^ f;
-	f = DB.SearchElement(pageNumber * 18 + 15);
-	MainFoodPicture->Image;
-	MainNameLabel->Text = f->Name;
-	IngradientsLabel->Text = f->Ingredients;
-	RecipeLabel->Text = f->Recipe;
-
-	panel3->Visible = false;
-	panel4->Visible = false;
-	panel5->Visible = false;
-	panel6->Visible = false;
-	panel7->Visible = false;
-	panel8->Visible = false;
-	panel9->Visible = false;
-	panel10->Visible = false;
-	panel11->Visible = false;
-	panel12->Visible = false;
-	panel13->Visible = false;
-	panel14->Visible = false;
-	panel15->Visible = false;
-	panel16->Visible = false;
-	panel17->Visible = false;
-	panel18->Visible = false;
-	panel19->Visible = false;
-	panel20->Visible = false;
-	PrevPageButton->Visible = false;
-	NextPageButton->Visible = false;
+	ShowItem(pageNumber * 18 + 15);
 }
 private: System::Void panel14_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	MainFoodPicture->Visible = true;
-	IngradientsChapterLabel->Visible = true;
-	IngradientsLabel->Visible = true;
-	RecipeLabel->Visible = true;
-	MainNameLabel->Visible = true;
-	Functions DB;
-	Food^ f;
-	f = DB.SearchElement(pageNumber * 18 + 16);
-	MainFoodPicture->Image;
-	MainNameLabel->Text = f->Name;
-	IngradientsLabel->Text = f->Ingredients;
-	RecipeLabel->Text = f->Recipe;
-
-	panel3->Visible = false;
-	panel4->Visible = false;
-	panel5->Visible = false;
-	panel6->Visible = false;
-	panel7->Visible = false;
-	panel8->Visible = false;
-	panel9->Visible = false;
-	panel10->Visible = false;
-	panel11->Visible = false;
-	panel12->Visible = false;
-	panel13->Visible = false;
-	panel14->Visible = false;
-	panel15->Visible = false;
-	panel16->Visible = false;
-	panel17->Visible = false;
-	panel18->Visible = false;
-	panel19->Visible = false;
-	panel20->Visible = false;
-	PrevPageButton->Visible = false;
-	NextPageButton->Visible = false;
+	ShowItem(pageNumber * 18 + 16);
 }
 private: System::Void panel13_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	MainFoodPicture->Visible = true;
-	IngradientsChapterLabel->Visible = true;
-	IngradientsLabel->Visible = true;
-	RecipeLabel->Visible = true;
-	MainNameLabel->Visible = true;
-	Functions DB;
-	Food^ f;
-	f = DB.SearchElement(pageNumber * 18 + 17);
-	MainFoodPicture->Image;
-	MainNameLabel->Text = f->Name;
-	IngradientsLabel->Text = f->Ingredients;
-	RecipeLabel->Text = f->Recipe;
-
-	panel3->Visible = false;
-	panel4->Visible = false;
-	panel5->Visible = false;
-	panel6->Visible = false;
-	panel7->Visible = false;
-	panel8->Visible = false;
-	panel9->Visible = false;
-	panel10->Visible = false;
-	panel11->Visible = false;
-	panel12->Visible = false;
-	panel13->Visible = false;
-	panel14->Visible = false;
-	panel15->Visible = false;
-	panel16->Visible = false;
-	panel17->Visible = false;
-	panel18->Visible = false;
-	panel19->Visible = false;
-	panel20->Visible = false;
-	PrevPageButton->Visible = false;
-	NextPageButton->Visible = false;
+	ShowItem(pageNumber * 18 + 17);
 }
 private: System::Void panel12_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	MainFoodPicture->Visible = true;
-	IngradientsChapterLabel->Visible = true;
-	IngradientsLabel->Visible = true;
-	RecipeLabel->Visible = true;
-	MainNameLabel->Visible = true;
-	Functions DB;
-	Food^ f;
-	f = DB.SearchElement(pageNumber * 18 + 18);
-	MainFoodPicture->Image;
-	MainNameLabel->Text = f->Name;
-	IngradientsLabel->Text = f->Ingredients;
-	RecipeLabel->Text = f->Recipe;
+	ShowItem(pageNumber * 18 + 18);
+}
 
-	panel3->Visible = false;
-	panel4->Visible = false;
-	panel5->Visible = false;
-	panel6->Visible = false;
-	panel7->Visible = false;
-	panel8->Visible = false;
-	panel9->Visible = false;
-	panel10->Visible = false;
-	panel11->Visible = false;
-	panel12->Visible = false;
-	panel13->Visible = false;
-	panel14->Visible = false;
-	panel15->Visible = false;
-	panel16->Visible = false;
-	panel17->Visible = false;
-	panel18->Visible = false;
-	panel19->Visible = false;
-	panel20->Visible = false;
-	PrevPageButton->Visible = false;
-	NextPageButton->Visible = false;
+// поиск ===================================
+private: System::Void SearchButton_Click(System::Object^ sender, System::EventArgs^ e) {
+	Functions DB;
+	List<int>^ fullList = DB.GetList();
+	String^ name = textBox1->Text;
+	int i = 0;
+	while ((i < fullList->Count) && !(DB.SearchElement(fullList[i])->Name->Contains(name))) {
+		i++;
+	}
+	if (DB.SearchElement(fullList[i])->Name->Contains(name)) {
+		ShowItem(fullList[i]);
+	}
+	else {
+		MessageBox::Show(L"Ничего не найдено", L"Ошибка поиска");
+	}
+
+}
+
+// Список избранного ======================
+private: System::Void FavouriteButton_Click(System::Object^ sender, System::EventArgs^ e) {
+	MainFoodPicture->Visible = false;
+	IngradientsChapterLabel->Visible = false;
+	IngradientsLabel->Visible = false;
+	RecipeLabel->Visible = false;
+	MainNameLabel->Visible = false;
+
+	PrevPageButton->Visible = true;
+	NextPageButton->Visible = true;
+
+	Functions DB;
+	list = DB.GetFavList();
+	pageNumber = 0;
+	RefillPage(list);
+}
+
+private: List<int>^ filtering(List<int>^ startList) {
+	String^ filter1 = comboBox1->Text;
+	String^ filter2 = comboBox2->Text;
+	String^ filter3 = comboBox3->Text;
+	if (comboBox1->Text == "...") {
+		filter1 = "";
+	}
+	if (comboBox2->Text == "...") {
+		filter2 = "";
+	}
+	if (comboBox3->Text == "...") {
+		filter3 = "";
+	}
+	Functions DB;
+	List<int>^ newList = gcnew List<int>();
+	Food^ f;
+	for each (int i in startList) {
+		f = DB.SearchElement(i);
+		if ((f->Tags->Contains(filter1)) && (f->Tags->Contains(filter2)) && (f->Tags->Contains(filter3))) {
+			newList->Add(i);
+		}
+	}
+	return newList;
+}
+
+
+
+private: System::Void MainFoodPicture_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }
