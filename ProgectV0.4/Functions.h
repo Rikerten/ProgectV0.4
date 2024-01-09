@@ -20,7 +20,7 @@ ref class Functions
 	SqlConnection^ conn;
 	SqlConnectionStringBuilder^ connStr;
 
-	//Data Source=DESKTOP-4V61EI6;Initial Catalog=FoodDB;Persist Security Info=True;User ID=sa;Password=***********;Encrypt=True;Trust Server Certificate=True
+//Data Source=DESKTOP-4V61EI6;Initial Catalog=FoodDB;Persist Security Info=True;User ID=sa;Password=***********;Encrypt=True;Trust Server Certificate=True
 public: void ConnectToDB() {
 	connStr = gcnew SqlConnectionStringBuilder();
 	connStr->DataSource = "DESKTOP-4V61EI6";
@@ -50,8 +50,7 @@ public: Food^ SearchElement(int ID) {
 			n->Name = reader["foodName"]->ToString()->TrimEnd();
 			n->Favourite = Convert::ToBoolean(reader["fav"]);
 			n->Rating = Convert::ToInt32(reader["rating"]->ToString()->TrimEnd());
-			n->Image = "C:\\Users\\mcrik\\Desktop\\C++ Progects\\ProgectV0.4\\Resourses\\Images\\";
-			n->Image +=	reader["image"]->ToString()->TrimEnd();
+			n->Image = "../Resourses/Images/" + reader["image"]->ToString()->TrimEnd();
 			n->Recipe = SearchRecipe(ID);
 			n->Ingredients = SearchIngradients(ID);
 			n->tags = SearchTags(ID);
@@ -149,11 +148,6 @@ private: String^ SearchTags(int ID) {
 }
 
 public: ListBox::ObjectCollection^ FillComboBox(int tagType) {
-	/*ListBox^ list = gcnew ListBox();
-	list->Items->Add(L"õçõç");
-	return list->Items;*/
-
-
 	try
 	{
 		ConnectToDB();

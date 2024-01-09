@@ -74,7 +74,7 @@ namespace ProgectV04 {
 	private: System::Windows::Forms::Panel^ panel18;
 	private: System::Windows::Forms::Panel^ panel19;
 	private: System::Windows::Forms::Panel^ panel20;
-	private: System::Windows::Forms::PictureBox^ pictureBox2;
+
 	private: System::Windows::Forms::PictureBox^ pictureBox3;
 	private: System::Windows::Forms::PictureBox^ pictureBox4;
 	private: System::Windows::Forms::PictureBox^ pictureBox5;
@@ -157,6 +157,8 @@ private: System::Windows::Forms::Label^ MainNameLabel;
 
 private: int pageNumber; // Номер текущей страницы
 private: List<int>^ list = gcnew List < int >(); // Список элементов.
+private: System::Windows::Forms::PictureBox^ pictureBox2;
+
 
 	private:
 		/// <summary>
@@ -362,6 +364,7 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 			this->OptionButton->Size = System::Drawing::Size(60, 60);
 			this->OptionButton->TabIndex = 3;
 			this->OptionButton->UseVisualStyleBackColor = true;
+			this->OptionButton->Click += gcnew System::EventHandler(this, &MyForm::OptionButton_Click);
 			// 
 			// FAQButton
 			// 
@@ -374,6 +377,7 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 			this->FAQButton->Size = System::Drawing::Size(60, 60);
 			this->FAQButton->TabIndex = 2;
 			this->FAQButton->UseVisualStyleBackColor = true;
+			this->FAQButton->Click += gcnew System::EventHandler(this, &MyForm::FAQButton_Click);
 			// 
 			// FavouriteButton
 			// 
@@ -499,6 +503,7 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 			// 
 			// pictureBox2
 			// 
+			this->pictureBox2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->pictureBox2->Location = System::Drawing::Point(0, 0);
 			this->pictureBox2->Name = L"pictureBox2";
 			this->pictureBox2->Size = System::Drawing::Size(120, 120);
@@ -1424,6 +1429,8 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 		Food^ f;
 		if (pageNumber * 18 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18]);
+			pictureBox2->Image = Image::FromFile(f->image);
+			pictureBox2->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel1->Text = f->Name;
 			this->label1->Text = f->Tags;
 			panel3->Visible = true;
@@ -1435,6 +1442,8 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 
 		if (pageNumber * 18+1 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+1]);
+			pictureBox3->Image = Image::FromFile(f->image);
+			pictureBox3->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel2->Text = f->Name;
 			this->label2->Text = f->Tags;
 			panel4->Visible = true;
@@ -1446,6 +1455,8 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 
 		if (pageNumber * 18+2 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+2]);
+			pictureBox4->Image = Image::FromFile(f->image);
+			pictureBox4->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel3->Text = f->Name;
 			this->label3->Text = f->Tags;
 			panel5->Visible = true;
@@ -1457,6 +1468,8 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 
 		if (pageNumber * 18 +3  < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+3]);
+			pictureBox5->Image = Image::FromFile(f->image);
+			pictureBox5->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel4->Text = f->Name;
 			this->label4->Text = f->Tags;
 			panel6->Visible = true;
@@ -1468,6 +1481,8 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 
 		if (pageNumber * 18+4 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+4]);
+			pictureBox6->Image = Image::FromFile(f->image);
+			pictureBox6->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel5->Text = f->Name;
 			this->label5->Text = f->Tags;
 			panel7->Visible = true;
@@ -1479,6 +1494,8 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 
 		if (pageNumber * 18 +5 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+5]);
+			pictureBox7->Image = Image::FromFile(f->image);
+			pictureBox7->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel6->Text = f->Name;
 			this->label6->Text = f->Tags;
 			panel8->Visible = true;
@@ -1490,6 +1507,8 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 
 		if (pageNumber * 18 + 6 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+6]);
+			pictureBox8->Image = Image::FromFile(f->image);
+			pictureBox8->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel7->Text = f->Name;
 			this->label7->Text = f->Tags;
 			panel9->Visible = true;
@@ -1502,6 +1521,8 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 
 		if (pageNumber * 18 + 7 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+7]);
+			pictureBox9->Image = Image::FromFile(f->image);
+			pictureBox9->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel8->Text = f->Name;
 			this->label8->Text = f->Tags;
 			panel10->Visible = true;
@@ -1514,6 +1535,8 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 
 		if (pageNumber * 18 + 8 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+8]);
+			pictureBox10->Image = Image::FromFile(f->image);
+			pictureBox10->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel9->Text = f->Name;
 			this->label9->Text = f->Tags;
 			panel11->Visible = true;
@@ -1526,6 +1549,8 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 
 		if (pageNumber * 18 + 9 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+9]);
+			pictureBox11->Image = Image::FromFile(f->image);
+			pictureBox11->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel10->Text = f->Name;
 			this->label10->Text = f->Tags;
 			panel20->Visible = true;
@@ -1537,6 +1562,8 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 
 		if (pageNumber * 18 + 10< l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+10]);
+			pictureBox12->Image = Image::FromFile(f->image);
+			pictureBox12->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel11->Text = f->Name;
 			this->label11->Text = f->Tags;
 			panel19->Visible = true;
@@ -1548,6 +1575,8 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 
 		if (pageNumber * 18 + 11 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+11]);
+			pictureBox13->Image = Image::FromFile(f->image);
+			pictureBox13->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel12->Text = f->Name;
 			this->label12->Text = f->Tags;
 			panel18->Visible = true;
@@ -1559,6 +1588,8 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 
 		if (pageNumber * 18 + 12 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+12]);
+			pictureBox14->Image = Image::FromFile(f->image);
+			pictureBox14->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel13->Text = f->Name;
 			this->label13->Text = f->Tags;
 			panel17->Visible = true;
@@ -1570,6 +1601,8 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 
 		if (pageNumber * 18 + 13 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+13]);
+			pictureBox15->Image = Image::FromFile(f->image);
+			pictureBox15->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel14->Text = f->Name;
 			this->label14->Text = f->Tags;
 			panel16->Visible = true;
@@ -1581,6 +1614,8 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 
 		if (pageNumber * 18 + 14 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+14]);
+			pictureBox16->Image = Image::FromFile(f->image);
+			pictureBox16->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel15->Text = f->Name;
 			this->label15->Text = f->Tags;
 			panel15->Visible = true;
@@ -1592,6 +1627,8 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 
 		if (pageNumber * 18+ 15 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+15]);
+			pictureBox17->Image = Image::FromFile(f->image);
+			pictureBox17->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel16->Text = f->Name;
 			this->label16->Text = f->Tags;
 			panel14->Visible = true;
@@ -1603,6 +1640,8 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 
 		if (pageNumber * 18 + 16 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+16]);
+			pictureBox18->Image = Image::FromFile(f->image);
+			pictureBox18->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel17->Text = f->Name;
 			this->label17->Text = f->Tags;
 			panel13->Visible = true;
@@ -1614,6 +1653,8 @@ private: List<int>^ list = gcnew List < int >(); // Список элементов.
 
 		if (pageNumber * 18 + 17 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+17]);
+			pictureBox19->Image = Image::FromFile(f->image);
+			pictureBox19->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel18->Text = f->Name;
 			this->label18->Text = f->Tags;
 			panel12->Visible = true;
@@ -1686,6 +1727,7 @@ private: System::Void ShowItem(int itemID) {
 	Food^ f;
 	f = DB.SearchElement(itemID);
 	MainFoodPicture->Image = Image::FromFile(f->image);
+	MainFoodPicture->SizeMode = PictureBoxSizeMode(4);
 	MainNameLabel->Text = f->Name;
 	IngradientsLabel->Text = f->Ingredients;
 	RecipeLabel->Text = f->Recipe;
@@ -1827,9 +1869,14 @@ private: List<int>^ filtering(List<int>^ startList) {
 	return newList;
 }
 
-
-
 private: System::Void MainFoodPicture_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+
+private: System::Void FAQButton_Click(System::Object^ sender, System::EventArgs^ e) {
+	MessageBox::Show(L"Контактных данных и/или адреса поддержки разработчик не оставил", L"Поддержка");
+}
+private: System::Void OptionButton_Click(System::Object^ sender, System::EventArgs^ e) {
+	MessageBox::Show(L"Настроек пока что нет, но наша команда уже работает над этим", L"");
 }
 };
 }
