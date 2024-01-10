@@ -157,7 +157,9 @@ private: System::Windows::Forms::Label^ MainNameLabel;
 
 private: int pageNumber; // Номер текущей страницы
 private: List<int>^ list = gcnew List < int >(); // Список элементов.
+private: int CurrentOpenFoodID;
 private: System::Windows::Forms::PictureBox^ pictureBox2;
+private: System::Windows::Forms::Button^ button2;
 
 
 	private:
@@ -266,6 +268,7 @@ private: System::Windows::Forms::PictureBox^ pictureBox2;
 			this->IngradientsLabel = (gcnew System::Windows::Forms::Label());
 			this->RecipeLabel = (gcnew System::Windows::Forms::Label());
 			this->MainNameLabel = (gcnew System::Windows::Forms::Label());
+			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->panel2->SuspendLayout();
@@ -1305,12 +1308,23 @@ private: System::Windows::Forms::PictureBox^ pictureBox2;
 			this->MainNameLabel->Text = L"label19";
 			this->MainNameLabel->Visible = false;
 			// 
+			// button2
+			// 
+			this->button2->Location = System::Drawing::Point(616, 115);
+			this->button2->Name = L"button2";
+			this->button2->Size = System::Drawing::Size(50, 50);
+			this->button2->TabIndex = 4;
+			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Visible = false;
+			this->button2->Click += gcnew System::EventHandler(this, &MyForm::button2_Click);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->ClientSize = System::Drawing::Size(1424, 985);
+			this->Controls->Add(this->button2);
 			this->Controls->Add(this->MainNameLabel);
 			this->Controls->Add(this->RecipeLabel);
 			this->Controls->Add(this->IngradientsLabel);
@@ -1696,6 +1710,7 @@ private: System::Windows::Forms::PictureBox^ pictureBox2;
 		IngradientsLabel->Visible = false;
 		RecipeLabel->Visible = false;
 		MainNameLabel->Visible = false;
+		button2->Visible = false;
 
 		comboBox1->Visible = true;
 		comboBox2->Visible = true;
@@ -1738,16 +1753,28 @@ private: System::Windows::Forms::PictureBox^ pictureBox2;
 
 //Открытие рецепта ==============================================
 private: System::Void ShowItem(int itemID) {
+	CurrentOpenFoodID = itemID;
 	MainFoodPicture->Visible = true;
 	IngradientsChapterLabel->Visible = true;
 	IngradientsLabel->Visible = true;
 	RecipeLabel->Visible = true;
 	MainNameLabel->Visible = true;
+	button2->Visible = true;
 	Functions DB;
 	Food^ f;
 	f = DB.SearchElement(itemID);
 	MainFoodPicture->Image = Image::FromFile(f->image);
 	MainFoodPicture->SizeMode = PictureBoxSizeMode(4);
+	if (f->favourite == true) {
+		button2->BackgroundImage = Image::FromFile("../Resourses/Images/s.png");
+		button2->BackgroundImageLayout = ImageLayout::Center;
+	}
+	else
+	{
+		button2->BackgroundImage = Image::FromFile("../Resourses/Images/star.png");
+		button2->BackgroundImageLayout = ImageLayout::Center;
+	}
+
 	MainNameLabel->Text = f->Name;
 	IngradientsLabel->Text = f->Ingredients;
 	RecipeLabel->Text = f->Recipe;
@@ -1860,6 +1887,7 @@ private: System::Void FavouriteButton_Click(System::Object^ sender, System::Even
 	IngradientsLabel->Visible = false;
 	RecipeLabel->Visible = false;
 	MainNameLabel->Visible = false;
+	button2->Visible = false;
 
 
 	comboBox1->Visible = true;
@@ -1912,6 +1940,19 @@ private: System::Void FAQButton_Click(System::Object^ sender, System::EventArgs^
 }
 private: System::Void OptionButton_Click(System::Object^ sender, System::EventArgs^ e) {
 	MessageBox::Show(L"Настроек пока что нет, но наша команда уже работает над этим", L"");
+}
+private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+	Functions db;
+	db.CahangeFavourite(CurrentOpenFoodID);
+	if (db.SearchElement(CurrentOpenFoodID)->favourite == true) {
+		button2->BackgroundImage = Image::FromFile("../Resourses/Images/s.png");
+		button2->BackgroundImageLayout = ImageLayout::Zoom;
+	}
+	else
+	{
+		button2->BackgroundImage = Image::FromFile("../Resourses/Images/star.png");
+		button2->BackgroundImageLayout = ImageLayout::Zoom;
+	}
 }
 };
 }
