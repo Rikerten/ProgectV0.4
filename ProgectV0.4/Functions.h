@@ -23,7 +23,7 @@ ref class Functions
 //Data Source=DESKTOP-4V61EI6;Initial Catalog=FoodDB;Persist Security Info=True;User ID=sa;Password=***********;Encrypt=True;Trust Server Certificate=True
 public: void ConnectToDB() {
 	connStr = gcnew SqlConnectionStringBuilder();
-	connStr->DataSource = "DESKTOP-4V61EI6";
+	connStr->DataSource = "DESKTOP-4V61EI6"; //Изменить имя сервера на котором лежит БД
 	connStr->InitialCatalog = "FoodDB";
 	connStr->IntegratedSecurity = true;
 	connStr->UserID = "sa";

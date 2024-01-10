@@ -443,6 +443,9 @@ private: System::Windows::Forms::PictureBox^ pictureBox2;
 			this->PrevPageButton->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PrevPageButton.BackgroundImage")));
 			this->PrevPageButton->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Center;
 			this->PrevPageButton->FlatAppearance->BorderSize = 0;
+			this->PrevPageButton->FlatAppearance->MouseDownBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(192)));
+			this->PrevPageButton->FlatAppearance->MouseOverBackColor = System::Drawing::Color::Transparent;
 			this->PrevPageButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->PrevPageButton->Location = System::Drawing::Point(69, 209);
 			this->PrevPageButton->Name = L"PrevPageButton";
@@ -453,11 +456,13 @@ private: System::Windows::Forms::PictureBox^ pictureBox2;
 			// 
 			// NextPageButton
 			// 
-			this->NextPageButton->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(0)),
-				static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(0)));
+			this->NextPageButton->BackColor = System::Drawing::Color::Transparent;
 			this->NextPageButton->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"NextPageButton.BackgroundImage")));
 			this->NextPageButton->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Center;
 			this->NextPageButton->FlatAppearance->BorderSize = 0;
+			this->NextPageButton->FlatAppearance->MouseDownBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(192)));
+			this->NextPageButton->FlatAppearance->MouseOverBackColor = System::Drawing::Color::Transparent;
 			this->NextPageButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->NextPageButton->Location = System::Drawing::Point(1354, 209);
 			this->NextPageButton->Name = L"NextPageButton";
@@ -1235,11 +1240,13 @@ private: System::Windows::Forms::PictureBox^ pictureBox2;
 				static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(0)));
 			this->MainFoodPicture->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"MainFoodPicture.BackgroundImage")));
 			this->MainFoodPicture->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->MainFoodPicture->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->MainFoodPicture->Location = System::Drawing::Point(103, 115);
 			this->MainFoodPicture->Name = L"MainFoodPicture";
 			this->MainFoodPicture->Size = System::Drawing::Size(500, 500);
 			this->MainFoodPicture->TabIndex = 20;
 			this->MainFoodPicture->TabStop = false;
+			this->MainFoodPicture->Visible = false;
 			this->MainFoodPicture->Click += gcnew System::EventHandler(this, &MyForm::MainFoodPicture_Click);
 			// 
 			// IngradientsChapterLabel
@@ -1254,6 +1261,7 @@ private: System::Windows::Forms::PictureBox^ pictureBox2;
 			this->IngradientsChapterLabel->Size = System::Drawing::Size(137, 26);
 			this->IngradientsChapterLabel->TabIndex = 21;
 			this->IngradientsChapterLabel->Text = L"Инградиенты";
+			this->IngradientsChapterLabel->Visible = false;
 			// 
 			// IngradientsLabel
 			// 
@@ -1267,6 +1275,7 @@ private: System::Windows::Forms::PictureBox^ pictureBox2;
 			this->IngradientsLabel->Size = System::Drawing::Size(54, 18);
 			this->IngradientsLabel->TabIndex = 22;
 			this->IngradientsLabel->Text = L"label19";
+			this->IngradientsLabel->Visible = false;
 			// 
 			// RecipeLabel
 			// 
@@ -1280,6 +1289,7 @@ private: System::Windows::Forms::PictureBox^ pictureBox2;
 			this->RecipeLabel->Size = System::Drawing::Size(60, 20);
 			this->RecipeLabel->TabIndex = 23;
 			this->RecipeLabel->Text = L"label19";
+			this->RecipeLabel->Visible = false;
 			// 
 			// MainNameLabel
 			// 
@@ -1293,6 +1303,7 @@ private: System::Windows::Forms::PictureBox^ pictureBox2;
 			this->MainNameLabel->Size = System::Drawing::Size(94, 33);
 			this->MainNameLabel->TabIndex = 24;
 			this->MainNameLabel->Text = L"label19";
+			this->MainNameLabel->Visible = false;
 			// 
 			// MyForm
 			// 
@@ -1686,8 +1697,17 @@ private: System::Windows::Forms::PictureBox^ pictureBox2;
 		RecipeLabel->Visible = false;
 		MainNameLabel->Visible = false;
 
+		comboBox1->Visible = true;
+		comboBox2->Visible = true;
+		comboBox3->Visible = true;
+		SearchButton->Visible = true;
+		textBox1->Visible = true;
 		PrevPageButton->Visible = true;
 		NextPageButton->Visible = true;
+
+		comboBox1->SelectedIndex = 0;
+		comboBox2->SelectedIndex = 0;
+		comboBox3->SelectedIndex = 0;
 
 		Functions DB;
 		list = DB.GetList();
@@ -1752,6 +1772,12 @@ private: System::Void ShowItem(int itemID) {
 	panel20->Visible = false;
 	PrevPageButton->Visible = false;
 	NextPageButton->Visible = false;
+
+	comboBox1->Visible = false;
+	comboBox2->Visible = false;
+	comboBox3->Visible = false;
+	SearchButton->Visible = false;
+	textBox1->Visible = false;
 }
 
 private: System::Void panel3_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
@@ -1835,8 +1861,17 @@ private: System::Void FavouriteButton_Click(System::Object^ sender, System::Even
 	RecipeLabel->Visible = false;
 	MainNameLabel->Visible = false;
 
+
+	comboBox1->Visible = true;
+	comboBox2->Visible = true;
+	comboBox3->Visible = true;
+	SearchButton->Visible = true;
+	textBox1->Visible = true;
 	PrevPageButton->Visible = true;
 	NextPageButton->Visible = true;
+	comboBox1->SelectedIndex = 0;
+	comboBox2->SelectedIndex = 0;
+	comboBox3->SelectedIndex = 0;
 
 	Functions DB;
 	list = DB.GetFavList();
