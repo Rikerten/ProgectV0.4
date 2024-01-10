@@ -231,5 +231,24 @@ public: List<int>^ GetFavList() {
 	}
 }
 
+public: void CahangeFavourite(int id) {
+	try {
+		String^ st;
+		ConnectToDB();
+
+		String^ cmdText = "update FoodTable set fav = 1 - fav where foodID = @ID";
+		SqlCommand^ cmd = gcnew SqlCommand(cmdText, conn);
+		cmd->Parameters->AddWithValue("@ID", id);
+		conn->Open();
+		SqlDataReader^ reader = cmd->ExecuteReader();
+
+
+	}
+	finally{
+		if (conn != nullptr) {
+			conn->Close();
+		}
+	}
+}
 };
 
