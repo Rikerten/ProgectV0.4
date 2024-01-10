@@ -152,7 +152,7 @@ public: ListBox::ObjectCollection^ FillComboBox(int tagType) {
 	{
 		ConnectToDB();
 
-		String^ cmdText = "SELECT tag FROM TagTable WHERE type = @typeID";
+		String^ cmdText = "SELECT distinct tag FROM TagTable WHERE type = @typeID";
 		SqlCommand^ cmd = gcnew SqlCommand(cmdText, conn);
 		cmd->Parameters->AddWithValue("@typeID", tagType);
 		conn->Open();
@@ -162,11 +162,10 @@ public: ListBox::ObjectCollection^ FillComboBox(int tagType) {
 		list->Items->Add(L"...");
 
 		while (reader->Read()) {
-			if (list->Items->IndexOf(reader["tag"]->ToString()) == -1) {
-				list->Items->Add(reader["tag"]->ToString()->TrimEnd());
+			if (list->Items->IndexOf(reader["tag"]->ToString()->TrimStart()->TrimEnd()) == -1) {
+				list->Items->Add(reader["tag"]->ToString()->TrimEnd()->TrimStart());
 			}
 		}
-		
 		return list->Items;
 	}
 	finally
