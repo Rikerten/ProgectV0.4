@@ -11,8 +11,17 @@ using namespace Data::SqlClient;
 
 ref class Food
 {
-public:
+private:
 	static int id;
+	static int rating;
+	static bool favourite;
+	static String^ name;
+	static String^ image;
+	static String^ ingredients;
+	static String^ recipe;
+	static String^ tags;
+
+public:
 	static property int ID {
 		int get() {
 			return id;
@@ -21,8 +30,6 @@ public:
 			id = value;
 		}
 	}
-
-	static int rating;
 	static property int Rating {
 		int get() {
 			return rating;
@@ -31,8 +38,6 @@ public:
 			rating = value;
 		}
 	}
-
-	static bool favourite;
 	static property bool Favourite {
 		bool get() {
 			return favourite;
@@ -41,8 +46,6 @@ public:
 			favourite = value;
 		}
 	}
-
-	static String^ name;
 	static property String^ Name {
 		String^ get() {
 			return name;
@@ -51,8 +54,6 @@ public:
 			name = value;
 		}
 	}
-
-	static String^ image;
 	static property String^ Image {
 		String^ get() {
 			return image;
@@ -61,8 +62,6 @@ public:
 			image = value;
 		}
 	}
-
-	static String^ ingredients;
 	static property String^ Ingredients {
 		String^ get() {
 			return ingredients;
@@ -71,8 +70,6 @@ public:
 			ingredients = value;
 		}
 	}
-
-	static String^ recipe;
 	static property String^ Recipe {
 		String^ get() {
 			return recipe;
@@ -81,8 +78,6 @@ public:
 			recipe = value;
 		}
 	}
-
-	static String^ tags;
 	static property String^ Tags {
 		String^ get() {
 			return tags;

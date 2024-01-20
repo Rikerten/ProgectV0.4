@@ -1454,7 +1454,7 @@ private: System::Windows::Forms::Button^ button2;
 		Food^ f;
 		if (pageNumber * 18 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18]);
-			pictureBox2->Image = Image::FromFile(f->image);
+			pictureBox2->Image = Image::FromFile(f->Image);
 			pictureBox2->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel1->Text = f->Name;
 			this->label1->Text = f->Tags;
@@ -1467,7 +1467,7 @@ private: System::Windows::Forms::Button^ button2;
 
 		if (pageNumber * 18+1 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+1]);
-			pictureBox3->Image = Image::FromFile(f->image);
+			pictureBox3->Image = Image::FromFile(f->Image);
 			pictureBox3->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel2->Text = f->Name;
 			this->label2->Text = f->Tags;
@@ -1480,7 +1480,7 @@ private: System::Windows::Forms::Button^ button2;
 
 		if (pageNumber * 18+2 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+2]);
-			pictureBox4->Image = Image::FromFile(f->image);
+			pictureBox4->Image = Image::FromFile(f->Image);
 			pictureBox4->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel3->Text = f->Name;
 			this->label3->Text = f->Tags;
@@ -1493,7 +1493,7 @@ private: System::Windows::Forms::Button^ button2;
 
 		if (pageNumber * 18 +3  < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+3]);
-			pictureBox5->Image = Image::FromFile(f->image);
+			pictureBox5->Image = Image::FromFile(f->Image);
 			pictureBox5->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel4->Text = f->Name;
 			this->label4->Text = f->Tags;
@@ -1506,7 +1506,7 @@ private: System::Windows::Forms::Button^ button2;
 
 		if (pageNumber * 18+4 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+4]);
-			pictureBox6->Image = Image::FromFile(f->image);
+			pictureBox6->Image = Image::FromFile(f->Image);
 			pictureBox6->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel5->Text = f->Name;
 			this->label5->Text = f->Tags;
@@ -1519,7 +1519,7 @@ private: System::Windows::Forms::Button^ button2;
 
 		if (pageNumber * 18 +5 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+5]);
-			pictureBox7->Image = Image::FromFile(f->image);
+			pictureBox7->Image = Image::FromFile(f->Image);
 			pictureBox7->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel6->Text = f->Name;
 			this->label6->Text = f->Tags;
@@ -1532,7 +1532,7 @@ private: System::Windows::Forms::Button^ button2;
 
 		if (pageNumber * 18 + 6 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+6]);
-			pictureBox8->Image = Image::FromFile(f->image);
+			pictureBox8->Image = Image::FromFile(f->Image);
 			pictureBox8->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel7->Text = f->Name;
 			this->label7->Text = f->Tags;
@@ -1546,7 +1546,7 @@ private: System::Windows::Forms::Button^ button2;
 
 		if (pageNumber * 18 + 7 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+7]);
-			pictureBox9->Image = Image::FromFile(f->image);
+			pictureBox9->Image = Image::FromFile(f->Image);
 			pictureBox9->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel8->Text = f->Name;
 			this->label8->Text = f->Tags;
@@ -1560,7 +1560,7 @@ private: System::Windows::Forms::Button^ button2;
 
 		if (pageNumber * 18 + 8 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+8]);
-			pictureBox10->Image = Image::FromFile(f->image);
+			pictureBox10->Image = Image::FromFile(f->Image);
 			pictureBox10->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel9->Text = f->Name;
 			this->label9->Text = f->Tags;
@@ -1574,7 +1574,7 @@ private: System::Windows::Forms::Button^ button2;
 
 		if (pageNumber * 18 + 9 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+9]);
-			pictureBox11->Image = Image::FromFile(f->image);
+			pictureBox11->Image = Image::FromFile(f->Image);
 			pictureBox11->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel10->Text = f->Name;
 			this->label10->Text = f->Tags;
@@ -1587,7 +1587,7 @@ private: System::Windows::Forms::Button^ button2;
 
 		if (pageNumber * 18 + 10< l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+10]);
-			pictureBox12->Image = Image::FromFile(f->image);
+			pictureBox12->Image = Image::FromFile(f->Image);
 			pictureBox12->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel11->Text = f->Name;
 			this->label11->Text = f->Tags;
@@ -1600,7 +1600,7 @@ private: System::Windows::Forms::Button^ button2;
 
 		if (pageNumber * 18 + 11 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+11]);
-			pictureBox13->Image = Image::FromFile(f->image);
+			pictureBox13->Image = Image::FromFile(f->Image);
 			pictureBox13->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel12->Text = f->Name;
 			this->label12->Text = f->Tags;
@@ -1613,7 +1613,7 @@ private: System::Windows::Forms::Button^ button2;
 
 		if (pageNumber * 18 + 12 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+12]);
-			pictureBox14->Image = Image::FromFile(f->image);
+			pictureBox14->Image = Image::FromFile(f->Image);
 			pictureBox14->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel13->Text = f->Name;
 			this->label13->Text = f->Tags;
@@ -1626,7 +1626,7 @@ private: System::Windows::Forms::Button^ button2;
 
 		if (pageNumber * 18 + 13 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+13]);
-			pictureBox15->Image = Image::FromFile(f->image);
+			pictureBox15->Image = Image::FromFile(f->Image);
 			pictureBox15->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel14->Text = f->Name;
 			this->label14->Text = f->Tags;
@@ -1639,7 +1639,7 @@ private: System::Windows::Forms::Button^ button2;
 
 		if (pageNumber * 18 + 14 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+14]);
-			pictureBox16->Image = Image::FromFile(f->image);
+			pictureBox16->Image = Image::FromFile(f->Image);
 			pictureBox16->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel15->Text = f->Name;
 			this->label15->Text = f->Tags;
@@ -1652,7 +1652,7 @@ private: System::Windows::Forms::Button^ button2;
 
 		if (pageNumber * 18+ 15 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+15]);
-			pictureBox17->Image = Image::FromFile(f->image);
+			pictureBox17->Image = Image::FromFile(f->Image);
 			pictureBox17->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel16->Text = f->Name;
 			this->label16->Text = f->Tags;
@@ -1665,7 +1665,7 @@ private: System::Windows::Forms::Button^ button2;
 
 		if (pageNumber * 18 + 16 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+16]);
-			pictureBox18->Image = Image::FromFile(f->image);
+			pictureBox18->Image = Image::FromFile(f->Image);
 			pictureBox18->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel17->Text = f->Name;
 			this->label17->Text = f->Tags;
@@ -1678,7 +1678,7 @@ private: System::Windows::Forms::Button^ button2;
 
 		if (pageNumber * 18 + 17 < l1->Count) {
 			f = DB.SearchElement(l1[pageNumber * 18+17]);
-			pictureBox19->Image = Image::FromFile(f->image);
+			pictureBox19->Image = Image::FromFile(f->Image);
 			pictureBox19->SizeMode = PictureBoxSizeMode(4);
 			this->Namelabel18->Text = f->Name;
 			this->label18->Text = f->Tags;
@@ -1763,9 +1763,9 @@ private: System::Void ShowItem(int itemID) {
 	Functions DB;
 	Food^ f;
 	f = DB.SearchElement(itemID);
-	MainFoodPicture->Image = Image::FromFile(f->image);
+	MainFoodPicture->Image = Image::FromFile(f->Image);
 	MainFoodPicture->SizeMode = PictureBoxSizeMode(4);
-	if (f->favourite == true) {
+	if (f->Favourite == true) {
 		button2->BackgroundImage = Image::FromFile("../Resourses/Images/s.png");
 		button2->BackgroundImageLayout = ImageLayout::Center;
 	}
@@ -1808,58 +1808,58 @@ private: System::Void ShowItem(int itemID) {
 }
 
 private: System::Void panel3_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	ShowItem(pageNumber * 18 + 1);
+	ShowItem(list[pageNumber * 18]);
 }
 private: System::Void panel4_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	ShowItem(pageNumber * 18 + 2);
+	ShowItem(list[pageNumber * 18 + 1]);
 }
 private: System::Void panel5_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	ShowItem(pageNumber * 18 + 3);
+	ShowItem(list[pageNumber * 18 + 2]);
 }
 private: System::Void panel6_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	ShowItem(pageNumber * 18 + 4);
+	ShowItem(list[pageNumber * 18 + 3]);
 }
 private: System::Void panel7_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	ShowItem(pageNumber * 18 + 5);
+	ShowItem(list[pageNumber * 18 + 4]);
 }
 private: System::Void panel8_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	ShowItem(pageNumber * 18 + 6);
+	ShowItem(list[pageNumber * 18 + 5]);
 }
 private: System::Void panel9_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	ShowItem(pageNumber * 18 + 7);
+	ShowItem(list[pageNumber * 18 + 6]);
 }
 private: System::Void panel10_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	ShowItem(pageNumber * 18 + 8);
+	ShowItem(list[pageNumber * 18 + 7]);
 }
 private: System::Void panel11_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	ShowItem(pageNumber * 18 + 9);
+	ShowItem(list[pageNumber * 18 + 8]);
 }
 private: System::Void panel20_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	ShowItem(pageNumber * 18 + 10);
+	ShowItem(list[pageNumber * 18 + 9]);
 }
 private: System::Void panel19_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	ShowItem(pageNumber * 18 + 11);
+	ShowItem(list[pageNumber * 18 + 10]);
 }
 private: System::Void panel18_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	ShowItem(pageNumber * 18 + 12);
+	ShowItem(list[pageNumber * 18 + 11]);
 }
 private: System::Void panel17_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	ShowItem(pageNumber * 18 + 13);
+	ShowItem(list[pageNumber * 18 + 12]);
 }
 private: System::Void panel16_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	ShowItem(pageNumber * 18 + 14);
+	ShowItem(list[pageNumber * 18 + 13]);
 }
 private: System::Void panel15_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	ShowItem(pageNumber * 18 + 15);
+	ShowItem(list[pageNumber * 18 + 14]);
 }
 private: System::Void panel14_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	ShowItem(pageNumber * 18 + 16);
+	ShowItem(list[pageNumber * 18 + 15]);
 }
 private: System::Void panel13_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	ShowItem(pageNumber * 18 + 17);
+	ShowItem(list[pageNumber * 18 + 16]);
 }
 private: System::Void panel12_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	ShowItem(pageNumber * 18 + 18);
+	ShowItem(list[pageNumber * 18 + 17]);
 }
 
 // поиск ===================================
@@ -1868,10 +1868,10 @@ private: System::Void SearchButton_Click(System::Object^ sender, System::EventAr
 	List<int>^ fullList = DB.GetList();
 	String^ name = textBox1->Text;
 	int i = 0;
-	while ((i < fullList->Count) && !(DB.SearchElement(fullList[i])->Name->Contains(name))) {
+	while ((i < fullList->Count) && !(DB.SearchElement(fullList[i])->Name->ToLower()->Contains(name->ToLower()))) {
 		i++;
 	}
-	if (DB.SearchElement(fullList[i])->Name->Contains(name)) {
+	if (i != fullList->Count) {
 		ShowItem(fullList[i]);
 	}
 	else {
@@ -1944,7 +1944,7 @@ private: System::Void OptionButton_Click(System::Object^ sender, System::EventAr
 private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
 	Functions db;
 	db.CahangeFavourite(CurrentOpenFoodID);
-	if (db.SearchElement(CurrentOpenFoodID)->favourite == true) {
+	if (db.SearchElement(CurrentOpenFoodID)->Favourite == true) {
 		button2->BackgroundImage = Image::FromFile("../Resourses/Images/s.png");
 		button2->BackgroundImageLayout = ImageLayout::Zoom;
 	}

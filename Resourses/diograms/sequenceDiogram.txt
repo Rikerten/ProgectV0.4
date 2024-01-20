@@ -1,0 +1,54 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor Пользователь as p
+participant Form as form
+participant Functions as func
+database DataDase as db
+
+
+p->form: MyForm_Load()
+activate form
+form -> func: GetList()
+activate func
+func->db: получить список ID
+activate db
+db-->func: список ID
+deactivate db
+func -> form : List<int>^
+deactivate func
+form -> p: отображение страницы
+
+form->func: FillComboBox(1)
+activate func
+func->db: получить список тегов с tagID=(1)
+activate db
+db-->func: список тегов с tagID=(1)
+deactivate db
+func -> form: ListBox::ObjectCollection^
+deactivate func
+form -> p: изменение списка в ComboBox1
+
+form->func: FillComboBox(2)
+activate func
+func->db: получить список тегов с tagID=(2)
+activate db
+db-->func: список тегов с tagID=(2)
+deactivate db
+func -> form: ListBox::ObjectCollection^
+deactivate func
+form -> p: изменение списка в ComboBox2
+
+form->func: FillComboBox(3)
+activate func
+func->db: получить список тегов с tagID=(3)
+activate db
+db-->func: список тегов с tagID=(3)
+deactivate db
+func -> form: ListBox::ObjectCollection^
+deactivate func
+form -> p: изменение списка в ComboBox3
+deactivate form
+
+
+@enduml

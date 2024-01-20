@@ -17,8 +17,8 @@ using namespace Data::SqlClient;
 
 ref class Functions
 {
-	SqlConnection^ conn;
-	SqlConnectionStringBuilder^ connStr;
+private: SqlConnection^ conn;
+private: SqlConnectionStringBuilder^ connStr;
 
 //Data Source=DESKTOP-4V61EI6;Initial Catalog=FoodDB;Persist Security Info=True;User ID=sa;Password=***********;Encrypt=True;Trust Server Certificate=True
 public: void ConnectToDB() {
@@ -53,7 +53,7 @@ public: Food^ SearchElement(int ID) {
 			n->Image = "../Resourses/Images/" + reader["image"]->ToString()->TrimEnd();
 			n->Recipe = SearchRecipe(ID);
 			n->Ingredients = SearchIngradients(ID);
-			n->tags = SearchTags(ID);
+			n->Tags = SearchTags(ID);
 		}
 		else
 		{
